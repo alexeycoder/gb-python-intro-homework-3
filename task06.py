@@ -23,7 +23,7 @@ class Randomizer:
     __ALMOST_ONE = 1.0 - __ALMOST_ZERO
     __DIVIDER_TO_NORMALIZE: float = __RAW_MAX + 1 - __FLOAT_EPSILON
 
-    _prior_mcs = 1
+    _prior_raw = 1
 
     @staticmethod
     def __reverse_number(number):
@@ -47,12 +47,12 @@ class Randomizer:
 
     @staticmethod
     def __get_random_raw():
-        multiplier = Randomizer.__summ_digits(Randomizer._prior_mcs) * math.pi
+        multiplier = Randomizer.__summ_digits(Randomizer._prior_raw) * math.pi
         mcs = datetime.datetime.now().microsecond
-        Randomizer._prior_mcs = mcs
         reversed = Randomizer.__reverse_number(mcs)
         reversed *= multiplier
         reversed = Randomizer.__trim_digits(reversed, Randomizer.__RAW_DIGITS)
+        Randomizer._prior_raw = reversed
         return reversed
 
     @staticmethod
